@@ -23,7 +23,14 @@ final class PresencaController {
     }
     
     func listar(_ req: Request) throws -> Future<[Presenca]> {
-        return Presenca.query(on: req).all()
+        
+        let all: EventLoopFuture<[Presenca]> = Presenca.query(on: req).all()
+        
+        let filteredResult: EventLoopFuture<[Presenca]> = all.map { (presencas) -> ([Presenca]) in
+            return presencas.filter { Calendar.current.isDateInToday($0.hora!) }
+        }
+        
+        return filteredResult
     }
     
 }

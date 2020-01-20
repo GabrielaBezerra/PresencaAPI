@@ -25,7 +25,7 @@ extension Presenca: Migration {
     static func prepare(on connection: SQLiteConnection) -> EventLoopFuture<Void> {
         return Database.create(self, on: connection) { builder in
             try addProperties(to: builder)
-            builder.unique(on: \.nome)
+            builder.unique(on: \.id)
         }
     }
 }

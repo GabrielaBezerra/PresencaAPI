@@ -28,13 +28,7 @@ final class PresencaController {
                     
                 } else {
                     
-                    return presenca.save(on: req).catchMap { (error) -> (Presenca) in
-                        if error.localizedDescription.lowercased().contains("sqliteerror.constraint") {
-                            throw Abort(.forbidden, reason: "Presença já assinada!")
-                        } else {
-                            throw Abort(.internalServerError, reason: error.localizedDescription)
-                        }
-                    }
+                    return presenca.save(on: req)
                     
                 }
             }
